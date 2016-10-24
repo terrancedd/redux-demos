@@ -3,7 +3,7 @@
 
 1. Redux is single immutable state tree
 2. **State** is readonly, and only way to change it is via **Action**
-3. - **pure function**
+3. **pure function**
      - return the value sole dependent on the input arguments
      - no side effect such as network/database calls
      - does not modify the input argument. e.g. not change items of the array passing to it
