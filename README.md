@@ -13,4 +13,4 @@
 
 
 ##notes
-- notes for the Redux
+- [NOTES for the Redux](/docs/notes.md)
