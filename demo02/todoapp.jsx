@@ -1,17 +1,38 @@
 const React = require('react');
 const ReactDOM = require('react-dom');
 const Redux=require('redux');
+const ReactRedux=require('react-redux');
 
 
 const {createStore,combineReducers}=Redux;
-
 const {Component}=React;
+const {Provider,connect}=ReactRedux;
 
 
 let nextTodoId=0;
 
+const addTodo=text=>({
+   
+            type:'ADD_TODO',
+            id: nextTodoId++,
+            text
+        }
+)
 
 
+
+const setVisibilityFilter=(filter)=>({
+                    type:'SET_VISIBILITY_FILTER',
+                    filter
+
+                }
+);
+
+
+const toggleTodo=id=>({
+        type:'TOGGLE_TODO',
+         id
+});
 
 const todo=(state,action) =>{
 	switch (action.type) {
@@ -68,7 +89,7 @@ visibilityFilter:visibilityFilter
 */
 });
 
-const store=createStore(todoApp);
+//const store=createStore(todoApp);
 
 
 /*construct combineReducers from scratch
@@ -121,7 +142,7 @@ const Link=({active,children,onClick})=>{
     );
 };
 
-
+/*
 class FilterLink extends Component {
     componentDidMount(){
         this.unsubscribe=store.subscribe(()=>
@@ -138,6 +159,7 @@ class FilterLink extends Component {
     render (){
         const props=this.props;
         const state=store.getState();
+        console.log(store.getState());
 
         return (
             <Link active={props.filter===state.visibilityFilter}
@@ -152,8 +174,41 @@ class FilterLink extends Component {
             );
     }
 }
+*/
+
+const mapStateToLinkProps =(
+    state,
+    ownProps
+    )=>{
+    return {
+        active:
+            ownProps.filter ===
+            state.visibilityFilter
+    };
+
+};
 
 
+const mapDispatchToLinkProps=(
+    dispatch,
+    ownProps
+    )=>{
+    return {
+        onClick:()=>dispatch(
+            setVisibilityFilter(ownProps.filter)
+            )
+                    
+    }
+};
+
+//the above code use the react-redux binding to write the container components VisibleTodoList in a different way
+
+
+
+const FilterLink=connect(
+    mapStateToLinkProps,
+    mapDispatchToLinkProps
+)(Link);
 
 const Todo=({onClick,
              completed,
@@ -213,18 +268,16 @@ const Footer=()=>(<p>
 
 
 
-const AddTodo=()=>{
+
+let AddTodo=({dispatch})=>{
     let input;
     return (
             <div>
             <input ref={node =>{input=node;
             }} />
             <button onClick={()=>{
-             store.dispatch({
-                   type:'ADD_TODO',
-                   id: nextTodoId++,
-                   text:input.value
-               })
+             dispatch(addTodo(input.value)
+               )
              input.value='';
              }}>
                 Add Todo
@@ -233,6 +286,9 @@ const AddTodo=()=>{
         );
 
 };
+//state is not passed to AddTodo
+//if the second argument is null, dispatch function will be passed directly
+AddTodo=connect()(AddTodo);
 
 
 const getVisibleTodos=(
@@ -252,6 +308,8 @@ const getVisibleTodos=(
 
 };
 
+
+/*
 class VisibleTodoList extends Component{
 
     componentDidMount(){
@@ -289,6 +347,37 @@ class VisibleTodoList extends Component{
     }
 }
 
+*/
+
+
+
+const mapStateToTodoListProps=state=>(
+        {
+            todos: getVisibleTodos(
+                    state.todos,
+                    state.visibilityFilter
+                   )
+        }
+);
+
+const mapDispatchToTodoListProps=dispatch=>(
+       {
+            onTodoClick:(id)=>{
+                    dispatch(toggleTodo(id));
+            }
+
+       }
+       ) ;
+
+
+
+const VisibleTodoList=connect(
+    mapStateToTodoListProps,
+    mapDispatchToTodoListProps
+)(TodoList);
+
+//the above code use the react-redux binding to write the container components VisibleTodoList in a different way
+
 
 
 const TodoApp =()=>(
@@ -305,7 +394,10 @@ const TodoApp =()=>(
 
 //console.log(...store.getState());
 ReactDOM.render(
- <TodoApp />,
+ <Provider store={createStore(todoApp)}>
+    <TodoApp />
+ </Provider>
+ ,
  document.getElementById('root')
 );
 
