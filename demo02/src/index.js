@@ -5,7 +5,16 @@ import { Provider } from 'react-redux'
 import App from './components/App'
 import reducer from './reducers'
 
-const store = createStore(reducer)
+const persistedState= {
+	todos:[{
+		id:'0',
+		text:'Welcome back!',
+		completed:false,
+	}],
+}
+
+//use the second arguments for the initial state
+const store = createStore(reducer,persistedState)
 
 
 render(
