@@ -5,6 +5,7 @@
   "author": "terryc129 <terryc129@gmail.com>",
   "license": "MIT",
   "dependencies": {
+    "babel-plugin-transform-es2015-modules-commonjs": "^6.18.0",
     "babel-plugin-transform-object-rest-spread": "^6.16.0",
     "react": "^15.3.2",
     "react-dom": "^15.3.2",

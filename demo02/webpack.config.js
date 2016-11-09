@@ -1,5 +1,5 @@
 module.exports={
-	entry:'./todoapp.jsx',
+	entry:'./src/index.js',
 	output:{
 		filename:'bundle.js'
 	},
@@ -9,7 +9,7 @@ module.exports={
 	  	{
 		test:/\.js[x]?$/,
 		exclude: /node_modules/,
-		loader:'babel-loader?presets=[]=latest&presets[]=react&plugins[]=transform-object-rest-spread',
+		loader:'babel-loader?presets=[]=latest&presets[]=react&plugins[]=transform-object-rest-spread&plugins[]=transform-es2015-modules-commonjs',
 	  	},
 	  ]
     }
