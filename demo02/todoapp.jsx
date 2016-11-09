@@ -201,14 +201,14 @@ const mapDispatchToLinkProps=(
     }
 };
 
-//the above code use the react-redux binding to write the container components VisibleTodoList in a different way
-
-
-
 const FilterLink=connect(
     mapStateToLinkProps,
     mapDispatchToLinkProps
 )(Link);
+
+
+//the above code use the react-redux binding to write the container components VisibleTodoList in a different way
+
 
 const Todo=({onClick,
              completed,
