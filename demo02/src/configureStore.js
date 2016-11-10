@@ -12,7 +12,8 @@ const configureStore=()=>{
 
 //save state to localStorage once changed
 	store.subscribe(throttle(()=>{
-
+         
+         console.log(store.getState());
 		saveState({todos:store.getState().todos});
 
 	},1000))
