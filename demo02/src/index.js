@@ -1,28 +1,11 @@
 import React from 'react'
 import { render } from 'react-dom'
-import { createStore } from 'redux'
-import { Provider } from 'react-redux'
-import App from './components/App'
-import reducer from './reducers'
-import {loadState,saveState} from './localStorage'
-import throttle from 'lodash/throttle'
+import configureStore from  './configureStore'
+import Root from './components/Root'
 
-
-const persistedState= loadState();
-
-//use the second arguments for the initial state
-const store = createStore(reducer,persistedState)
-
-//save state to localStorage once changed
-store.subscribe(throttle(()=>{
-
-	saveState({todos:store.getState().todos});
-
-},1000))
+const store=configureStore();
 
 render(
- <Provider store={store}>
-    <App />
- </Provider>,
+ <Root store={store}/>,
  document.getElementById('root')
 )
