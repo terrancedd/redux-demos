@@ -35,4 +35,20 @@ const todos=(state=[],action)=>{
  }
 }
 
+//the defautl export is always reducer
 export default todos
+
+//selector: function named like get*  prepares the data used by UI
+export const getVisibleTodos=(state,filter) =>{
+    switch(filter){
+            case 'all':
+                return state;
+            case 'completed':
+                return state.filter(t=>t.completed);
+            case 'active':
+                return state.filter(t=>!t.completed);
+             default:
+                throw new Error('Unknown filter: ' + filter)
+        }
+}
+
