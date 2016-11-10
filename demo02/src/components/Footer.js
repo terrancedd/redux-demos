@@ -13,7 +13,7 @@ const Footer=()=>(
                 </FilterLink>
                 {' '}
                 <FilterLink
-                    filter='acitive'
+                    filter='active'
                     
                 >
                 Active
