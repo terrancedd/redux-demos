@@ -5,7 +5,10 @@
   "author": "terryc129 <terryc129@gmail.com>",
   "license": "MIT",
   "dependencies": {
+    "babel-plugin-syntax-object-rest-spread": "^6.13.0",
+    "babel-plugin-transform-es2015-destructuring": "^6.18.0",
     "babel-plugin-transform-es2015-modules-commonjs": "^6.18.0",
+    "babel-plugin-transform-es2015-parameters": "^6.18.0",
     "babel-plugin-transform-object-rest-spread": "^6.16.0",
     "lodash": "^4.16.6",
     "node-uuid": "^1.4.7",
