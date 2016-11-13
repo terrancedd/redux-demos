@@ -2,47 +2,51 @@ import { createStore } from 'redux'
 import reducer from './reducers'
 
 
-const addLoggingToDispatch=(store)=>{
-	const rawDispatch=store.dispatch;
+const logger=store=>next=>{
 	if(!console.group){
-		return rawDispatch;
+		return next;
 	}
 	return (action)=>{
 		console.group(action.type);
 		console.log('%c pre state','color:gray',store.getState());
 		console.log('%c action','color:yellow',action);
-		const returnValue= rawDispatch(action);
+		const returnValue= next(action);
 		console.log('%c next state','color:green',store.getState());
 		console.groupEnd(action.type);
 		return returnValue;
 
 	}
-
 }
 
-const addPromiseSupportToDispatch=store=>{
-	const rawDispatch=store.dispatch;
-	return action=> {
-		if(typeof action.then === 'function'){
-			return action.then(rawDispatch)
-		}
-		return rawDispatch(action);
+
+
+const promise=store=>next=>action=>{
+	if(typeof action.then === 'function'){
+		return action.then(next)
 	}
+	return next(action);
 }
+	
 
+
+const wrapDispatchWithMidllewares=(store,middlewares)=>{
+	middlewares.slice().reverse().forEach(middleware=>
+		store.dispatch=middleware(store)(store.dispatch)
+	)
+}
 
 const configureStore=()=>{
 
-	
+	const middlewares=[promise];
 
 //use the second arguments for the initial state
 	const store = createStore(reducer)
 
 	if(process.env.NODE_ENV !=='production')
-	store.dispatch= addLoggingToDispatch(store);
+	middlewares.push(logger);
 
-	store.dispatch=addPromiseSupportToDispatch(store);
-
+	
+	wrapDispatchWithMidllewares(store,middlewares);
    return store
 
 }
