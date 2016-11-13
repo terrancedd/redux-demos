@@ -21,3 +21,7 @@ export const getVisibleTodos=(state,filter) =>{
     return ids.map(id=> fromById.getTodo(state.byId,id));
 }
 
+
+
+export const getIsFetching=(state,filter)=>
+	fromList.getIsFetching(state.listByFilter[filter]);
