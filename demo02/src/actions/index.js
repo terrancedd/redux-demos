@@ -1,13 +1,11 @@
 import * as api from '../api'
-import { normalize } from 'normalizr'
-import * as schema from './schema'
 
 export const addTodo=text=>dispatch=>
 	api.addTodo(text).then(
 		response=>{
 			dispatch({
 				type:'ADD_TODO_SUCCESS',
-				response:normalize(response,schema.todo),
+				response,
 			})
 		})
 
@@ -29,7 +27,7 @@ export const fetchTodos=filter=>dispatch=>{
 				dispatch({
 					type:'FETCH_TODOS_SUCCESS',
 					filter,
-					response:normalize(response,schema.arrayOfTodos),
+					response,
 				});
 			},
 			error=>{
