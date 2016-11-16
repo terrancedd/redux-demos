@@ -1,7 +1,9 @@
 #redux-demos
 
 ##Usage
-`clone` and `npm install`
+- `clone` and `npm install`
+-  make sure to install `webpack` and `webpack-dev-server` globally
+
 
 ##demo01
 - A counter app via redux and webpack
