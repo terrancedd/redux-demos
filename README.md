@@ -1,5 +1,4 @@
-#redux-beginning-demo
-
+#redux-demos
 
 ##Usage
 `clone` and `npm install`
@@ -10,6 +9,7 @@
 
 ##demo02
 - A todo app via redux and webpack
+- 27 branches for each lesson on different topics
 
 
 ##notes
