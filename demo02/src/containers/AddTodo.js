@@ -13,7 +13,7 @@ let AddTodo=({dispatch})=>{
             }} />
             <button onClick={()=>{
              dispatch(addTodo(input.value)
-               )
+               );
              input.value='';
              }}>
                 Add Todo
